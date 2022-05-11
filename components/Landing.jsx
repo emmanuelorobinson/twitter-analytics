@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DisplayMetrics from "./DisplayMetrics";
 import FindUser from "./FindUser";
 
 //get user id from props and set it to state
@@ -15,7 +16,7 @@ const Landing = () => {
     <div>
       <FindUser id={userIdListner} />
       {userId && (
-        <div/>)}
+        <DisplayMetrics id={userId}/>)}
     </div>
   );
 };

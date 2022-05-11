@@ -9,9 +9,10 @@ const FindUser = (props) => {
       const response = await fetch(`/api/getUser?user=${user}`);
 
       const data = await response.json();
-      
-      props.id(data.id);
 
+      console.log(data);
+      props.id(data.id);
+      
     } catch (error) {
       console.log(error);
     }
@@ -21,8 +22,6 @@ const FindUser = (props) => {
     setUser(e.target.value);
   };
 
-
-  // set
 
   return (
     <form onSubmit={handleSubmit}>

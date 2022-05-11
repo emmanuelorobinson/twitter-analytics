@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 
 const DisplayMetrics = (props) => {
-  return (
-    <div>DisplayMetrics</div>
-  )
-}
+  const [metrics, setMetrics] = useState({});
 
-export default DisplayMetrics
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`/api/getMetrics?id=${props.id}`);
+      const data = await response.json();
+      console.log(data);
+    }
+
+    fetchData();
+  }, [metrics, props.id]);
+
+  return <div>DisplayMetrics</div>;
+};
+
+export default DisplayMetrics;
