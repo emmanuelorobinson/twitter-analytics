@@ -6,17 +6,23 @@ import FindUser from "./FindUser";
 
 const Landing = () => {
   const [userId, setUserId] = useState(null);
+  const [username, setUsername] = useState(null);
 
   const userIdListner = (userId) => {
     setUserId(userId);
     console.log(userId);
   };
 
+  const usernameListner = (username) => {
+    setUsername(username);
+    console.log(username);
+  }
+
   return (
     <div>
-      <FindUser id={userIdListner} />
+      <FindUser id={userIdListner} username={usernameListner} />
       {userId && (
-        <DisplayMetrics id={userId}/>)}
+        <DisplayMetrics id={userId} username={username}/>)}
     </div>
   );
 };

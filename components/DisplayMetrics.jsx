@@ -5,13 +5,13 @@ const DisplayMetrics = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`/api/getMetrics?id=${props.id}`);
+      const response = await fetch(`/api/getMetrics?username=${props.username}`);
       const data = await response.json();
       console.log(data);
     }
 
     fetchData();
-  }, [metrics, props.id]);
+  }, [metrics, props.username]);
 
   return <div>DisplayMetrics</div>;
 };

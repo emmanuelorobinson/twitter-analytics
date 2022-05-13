@@ -12,6 +12,7 @@ const FindUser = (props) => {
 
       console.log(data);
       props.id(data.id);
+      props.username(data.username);
       
     } catch (error) {
       console.log(error);
@@ -29,7 +30,7 @@ const FindUser = (props) => {
       <input
         type="text"
         value={user}
-        placeholder="@abcd"
+        placeholder="username"
         onChange={handleChange}
       />
       <button type="submit">Find User</button>
