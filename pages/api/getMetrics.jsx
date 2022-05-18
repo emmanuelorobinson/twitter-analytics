@@ -26,18 +26,18 @@ export default async function handler(req, res) {
 
     const params = {
       query: `from:${username} -is:retweet`,
-      "tweet.fields": "author_id, public_metrics, source"
+      "tweet.fields": "created_at,author_id,public_metrics,source"
 
     };
 
     const response = await needle("get", endpointUrl, params, {
       headers: {
         "User-Agent": "v2RecentSearchJS",
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${process.env.BEARER_TOKEN}`,
       },
     });
 
-    const data = await response.json();
+    const data = await response.body;
 
     res.send(data.data);
   } catch (error) {
