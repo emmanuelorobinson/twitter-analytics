@@ -29,11 +29,11 @@ export default async function handler(req, res) {
 
     // console.log(response);
     const data = await response.body;
-    console.log(data);
 
     res.send(data.data);
 
   } catch (error) {
     console.log(error);
   }
+
 }

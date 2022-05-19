@@ -3,6 +3,39 @@ import needle from "needle";
 
 const client = new Client(process.env.BEARER_TOKEN);
 
+const storeToJSON = (data) => {
+  let json = {};
+
+  console.log(data);
+
+  for (let i = 0; i < data.length; i++) {
+
+    let tweet = data[i];
+    let tweetId = tweet.id;
+
+    json[tweetId] = {
+      id: tweetId,
+      created_at: tweet.created_at,
+      author_id: tweet.author_id,
+      like_count: tweet.public_metrics.like_count,
+      quote_count: tweet.public_metrics.quote_count,
+      reply_count: tweet.public_metrics.reply_count,
+      retweet_count: tweet.public_metrics.retweet_count,
+      source: tweet.source,
+      text: tweet.text,
+      hashtag: tweet.entities.hashtags.tag,
+    };
+
+  }
+  // save to json file
+
+  //define fs
+  const fs = require("fs");
+
+  fs.writeFileSync("././data/tweets.json", JSON.stringify(json));
+
+};
+
 export default async function handler(req, res) {
   // get twitter data using user id from query
   // Top tweet types
@@ -26,7 +59,7 @@ export default async function handler(req, res) {
 
     const params = {
       query: `from:${username} -is:retweet`,
-      "tweet.fields": "created_at,author_id,public_metrics,source"
+      "tweet.fields": "created_at,author_id,public_metrics,source,entities",
 
     };
 
@@ -38,6 +71,8 @@ export default async function handler(req, res) {
     });
 
     const data = await response.body;
+
+    storeToJSON(data.data);
 
     res.send(data.data);
   } catch (error) {
