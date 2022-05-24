@@ -1,1 +1,24 @@
-{"1527097254242181128":{"id":"1527097254242181128","created_at":"2022-05-19T01:22:12.000Z","author_id":"2244994945","like_count":24,"quote_count":0,"reply_count":1,"retweet_count":7,"source":"Twitter Web App","text":"📣 Reminder to join the conversation on open source dev tools with @charmcli tomorrow, May 19 at 9am PT / 12pm ET https://t.co/LFtUagnv7a"},"1525143950440337408":{"id":"1525143950440337408","created_at":"2022-05-13T16:00:28.000Z","author_id":"2244994945","like_count":33,"quote_count":1,"reply_count":4,"retweet_count":12,"source":"Twitter Web App","text":"📣 Jump in to hear @alanbenlee, @jamie_maguire1, and the @charmcli team on Thursday, 5/19 at 12pm ET/9am PT as they discuss OSS development tools. ⚙️🛠\n\nSet a reminder 👇\nhttps://t.co/fWljPVHTwi"},"1524796546306478083":{"id":"1524796546306478083","created_at":"2022-05-12T17:00:00.000Z","author_id":"2244994945","like_count":53,"quote_count":8,"reply_count":8,"retweet_count":24,"source":"TweetDeck Web App","text":"Today marks the launch of Devs in the Details, a technical video series made for developers by developers building with the Twitter API.  🚀\n\nIn this premiere episode, @jessicagarson walks us through how she built @FactualCat #WelcomeToOurTechTalk\n⬇️\n\nhttps://t.co/nGa8JTQVBJ","hashtag":[{"start":225,"end":246,"tag":"WelcomeToOurTechTalk"}]}}
+{
+  "1528796298278670337": {
+    "id": "1528796298278670337",
+    "created_at": "2022-05-23T17:53:35.000Z",
+    "author_id": "2244994945",
+    "like_count": 72,
+    "quote_count": 2,
+    "reply_count": 0,
+    "retweet_count": 20,
+    "source": "Twitter Web App",
+    "text": "📢  All developers can now Tweet videos, GIFs, images, alt text, and subtitles with the v1.1 media endpoints. \n\nWe’re adding this v1.1 functionality while we continue to work to deliver the v2 media endpoints. ⚙️\n\nLearn more 👇 \nhttps://t.co/7OUrCqqcSb"
+  },
+  "1527691246449225728": {
+    "id": "1527691246449225728",
+    "created_at": "2022-05-20T16:42:30.000Z",
+    "author_id": "2244994945",
+    "like_count": 170,
+    "quote_count": 34,
+    "reply_count": 7,
+    "retweet_count": 58,
+    "source": "Twitter Web App",
+    "text": "The time(line) has finally come! The reverse-chronological home timeline is now available on the Twitter API v2, allowing you to retrieve the most recent Tweets and Retweets from people you follow.\n\nCheck out the forum post for more information👇\nhttps://t.co/JaaguOjtvl"
+  }
+}

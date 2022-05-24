@@ -6,13 +6,15 @@ const FindUser = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/getUser?user=${user}`);
+      // const response = await fetch(`/api/getUser?user=${user}`);
 
-      const data = await response.json();
+      // const data = await response.json();
 
-      console.log(data);
-      props.id(data.id);
-      props.username(data.username);
+      // console.log(data);
+      // props.id(data.id);
+      // props.username(data.username);
+
+      const response = await fetch('/api/getCalculations')
       
     } catch (error) {
       console.log(error);

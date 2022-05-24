@@ -6,7 +6,7 @@ const client = new Client(process.env.BEARER_TOKEN);
 const storeToJSON = (data) => {
   let json = {};
 
-  console.log(data);
+  // console.log(data);
 
   for (let i = 0; i < data.length; i++) {
 
@@ -23,7 +23,7 @@ const storeToJSON = (data) => {
       retweet_count: tweet.public_metrics.retweet_count,
       source: tweet.source,
       text: tweet.text,
-      hashtag: tweet.entities.hashtags.tag,
+      hashtag: tweet.entities.hashtags,
     };
 
   }
@@ -33,6 +33,8 @@ const storeToJSON = (data) => {
   const fs = require("fs");
 
   fs.writeFileSync("././data/tweets.json", JSON.stringify(json));
+
+  res.status(200);
 
 };
 
