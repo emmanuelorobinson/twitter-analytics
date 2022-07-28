@@ -19,13 +19,16 @@ const storeToJSON = (data) => {
     following_count: data.public_metrics.following_count,
     tweet_count: data.public_metrics.tweet_count,
     listed_count: data.public_metrics.listed_count,
+    profile_image_url: data.profile_image_url,
   };
   // save to json file
 
   //define fs
   const fs = require("fs");
 
+  // navigate to the directory where the file is located
   fs.writeFileSync("././data/user.json", JSON.stringify(json));
+  //print current directory
 
   // return json;
 };
@@ -44,7 +47,7 @@ export default async function handler(req, res) {
     const endpointUrl = `https://api.twitter.com/2/users/by/username/${user}`;
 
     const params = {
-      "user.fields": "public_metrics",
+      "user.fields": "public_metrics,profile_image_url",
     };
 
     const response = await needle("get", endpointUrl, params, {
