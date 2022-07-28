@@ -67,6 +67,9 @@ const getTopTweet = () => {
   for (let tweet in json) {
     let tweetMetrics = json[tweet];
 
+    const date = new Date(tweetMetrics.created_at);
+    //console.log(date.getUTCHours());
+
     // console.log(tweetMetrics);
 
     //get source and increment count
