@@ -33,15 +33,12 @@ const metrics = {
   followers_count: 0,
   following_count: 0,
   tweet_count: 0,
-  topSource: [],
+  topSource: {},
   tweetWithMostLikes: "",
-  topHashtag: [],
+  topHashtag: {},
 };
 
 const getTopSource = () => {
-  // loop through tweets.json and get metrics
-
-  //get most frequent source
 
   //open json file and get data
   const fs = require("fs");
@@ -50,33 +47,67 @@ const getTopSource = () => {
   //parse json
   const json = JSON.parse(data);
 
-  //loop through json and get metrics
-
-  const sourceCount = {
-    source: "",
-    count: 0,
-  };
+  const sources = {};
 
   for (let tweet in json) {
     let tweetMetrics = json[tweet];
 
-    // console.log(tweetMetrics);
-
     //get source and increment count
     let source = tweetMetrics.source;
 
-    if (sourceCount.source === source) {
-      sourceCount.count++;
-    } else {
-      sourceCount.source = source;
-      sourceCount.count = 1;
+    console.log(source);
+
+    if (sources[source] === undefined) {
+      sources[source] = 1;
+    }
+    else {
+      sources[source]++;
     }
   }
 
   //get most frequent source
-  metrics.topSource = sourceCount;
+  metrics.topSource = sources;
 };
 
+const getTopHashtag = () => {
+  //open json file and get data
+  const fs = require("fs");
+  const data = fs.readFileSync("././data/tweets.json");
+
+  //parse json
+  const json = JSON.parse(data);
+
+  const hashtags = {};
+
+  for (let tweet in json) {
+    let tweetMetrics = json[tweet];
+
+    //get hashtags and increment count
+    let hashtag = tweetMetrics.hashtag || [];
+    
+    // ignore hashtags that are empty
+    if (hashtags.length === 0) {
+      continue;
+    }
+    else {
+    hashtag.forEach((tag) => {
+
+      console.log(tag.tag);
+
+      if (hashtags[tag.tag] === undefined) {
+        hashtags[tag.tag] = 1;
+      }
+      else {
+        hashtags[tag.tag]++;
+      }
+    }
+    );
+  }
+
+    metrics.topHashtag = hashtags;
+  }
+
+}
 const getUserInfo = () => {
 
   const fs = require("fs");
@@ -91,11 +122,6 @@ const getUserInfo = () => {
 }
 
 const getTopTweet = () => {
-  //loop through tweets.json and get tweet with most likes
-
-  //get most liked tweet
-
-  //open json file and get data
   const fs = require("fs");
 
   const data = fs.readFileSync("././data/tweets.json");
@@ -113,9 +139,6 @@ const getTopTweet = () => {
     let tweetMetrics = json[tweet];
 
     const date = new Date(tweetMetrics.created_at);
-    //console.log(date.getUTCHours());
-
-    // console.log(tweetMetrics);
 
     //get source and increment count
     let like_count = tweetMetrics.like_count;
@@ -133,14 +156,6 @@ export default async function handler(req, res) {
 
   try {
     const { username } = req.query;
-
-    //retrive full archive of tweets for user
-
-    // const response = await fetch(`https://api.twitter.com/2/tweets/search/recent?query=from:TwitterDev`, {
-    //   headers: {
-    //     Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-    //   },
-    // });
 
     const endpointUrl = `https://api.twitter.com/2/tweets/search/recent`;
 
@@ -161,10 +176,11 @@ export default async function handler(req, res) {
     storeToJSON(data.data);
 
     getTopSource();
+    getTopHashtag();
     getTopTweet();
     getUserInfo();
 
-    console.log(metrics);
+    // console.log(metrics);
     
 
     const fs = require("fs");

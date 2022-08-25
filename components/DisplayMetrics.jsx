@@ -12,8 +12,8 @@ const DisplayMetrics = (props) => {
       );
 
       const data = await response.json();
-      console.log("data");
-      console.log(data);
+      //console.log("data");
+      //console.log(data);
       setMetrics(data);
     }
     fetchData();
@@ -37,6 +37,12 @@ const DisplayMetrics = (props) => {
         value={metrics.tweet_count}
         emoji="📝"
         />
+        <Card
+        heading="Hashtags"
+        value={metrics.topHashtag}
+        emoji="#️⃣"
+        />
+
     </StyledGrid>
   )
 };
