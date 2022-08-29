@@ -42,6 +42,11 @@ const DisplayMetrics = (props) => {
         value={metrics.topHashtag}
         emoji="#️⃣"
         />
+        <Card
+        heading="Top Sources"
+        value={metrics.topSource}
+        emoji="📱"
+        />
 
     </StyledGrid>
   )

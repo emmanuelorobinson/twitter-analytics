@@ -98,19 +98,21 @@ const StyledValue = styled.div`
   color: #000000;
 
   li {
-    font-size: 25px;
-    line-height: 30px;
+    font-size: 22px;
+    line-height: 27px;
     list-style-type: none;
     margin-bottom: 5px;
+    margin-top: -5px;
 
   }
 `;
 
 const StyledEmoji = styled.div`
+  position: absolute;
+  margin-top: 175px;
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
-  line-height: 77px;
   text-align: left;
 `;
 
