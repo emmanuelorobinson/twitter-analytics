@@ -1,11 +1,11 @@
 import { Client } from "twitter-api-sdk";
 import needle from "needle";
-import path from 'path';
-import { promises as fs } from 'fs';
+import path from "path";
+import { readFileSync, writeFileSync } from "fs";
 
 const client = new Client(process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN);
 
-const storeToJSON = async (data) => {
+const storeToJSON = (data) => {
   let json = {};
 
   console.log(data);
@@ -26,14 +26,13 @@ const storeToJSON = async (data) => {
   // save to json file
 
   //define fs
-  const jsonDirectory = path.join(process.cwd(), 'json');
-  
+  const jsonDirectory = path.join(process.cwd(), "json");
 
-  await fs.writeFile(jsonDirectory + '/user.json', JSON.stringify(json), (err) => {
+  writeFileSync(jsonDirectory + "/user.json", JSON.stringify(json), (err) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('file saved');
+      console.log("file saved");
     }
   });
 
@@ -45,7 +44,7 @@ const storeToJSON = async (data) => {
 export default async function handler(req, res) {
   try {
     const { user } = req.query;
-  
+
     const endpointUrl = `https://api.twitter.com/2/users/by/username/${user}`;
 
     const params = {
@@ -64,7 +63,6 @@ export default async function handler(req, res) {
     //     authorization: `Bearer ${process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN}`,
     //   },
     // });
-
 
     // console.log(response);
     const data = await response.body;

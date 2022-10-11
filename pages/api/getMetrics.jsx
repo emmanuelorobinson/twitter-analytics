@@ -1,13 +1,13 @@
 import { Client } from "twitter-api-sdk";
 import needle from "needle";
 import path from "path";
-import {promises as fs} from 'fs'
+import {readFileSync, writeFileSync} from 'fs'
 
 const client = new Client(process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN);
 
 const jsonDirectory = path.join(process.cwd(), "json");
 
-const storeToJSON = async (data) => {
+const storeToJSON = (data) => {
   let json = {};
 
   for (let i = 0; i < data.length; i++) {
@@ -30,7 +30,7 @@ const storeToJSON = async (data) => {
 
   // const fs = require("fs");
   // fs.writeFileSync("././data/tweets.json", JSON.stringify(json));
-  await fs.writeFile(jsonDirectory + "/tweets.json", JSON.stringify(json), (err) =>  {
+  writeFileSync(jsonDirectory + "/tweets.json", JSON.stringify(json), (err) =>  {
     if (err) {
       console.log(err);
     }
@@ -103,9 +103,9 @@ const getTopHashtag =  (data) => {
     metrics.topHashtag = hashtags;
   }
 };
-const getUserInfo =  async() => {
+const getUserInfo =  () => {
 
-  const data = await fs.readFile(jsonDirectory + "/user.json", "utf8");
+  const data = readFileSync(jsonDirectory + "/user.json", "utf8");
 
 
   const json = JSON.parse(data);
@@ -167,7 +167,7 @@ export default async function handler(req, res) {
 
     storeToJSON(data.data);
 
-    const localData = await fs.readFile(jsonDirectory + "/tweets.json", "utf8");
+    const localData =  readFileSync(jsonDirectory + "/tweets.json", "utf8");
 
     getTopSource(localData);
     getTopHashtag(localData);
@@ -178,7 +178,7 @@ export default async function handler(req, res) {
 
     // const fs = require("fs");
     // fs.writeFileSync("././data/tweetdata.json", JSON.stringify(metrics));
-    await fs.writeFile(
+    await writeFileSync(
       jsonDirectory + "/tweetdata.json",
       JSON.stringify(metrics), (err) => {
         if (err) {
