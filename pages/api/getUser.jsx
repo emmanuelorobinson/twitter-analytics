@@ -1,7 +1,7 @@
 import { Client } from "twitter-api-sdk";
 import needle from "needle";
 
-const client = new Client(process.env.TWITTER_BEARER_TOKEN);
+const client = new Client(process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN);
 
 const storeToJSON = (data) => {
   let json = {};
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
 
     const response = await needle("get", endpointUrl, params, {
       headers: {
-        authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
+        authorization: `Bearer ${process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN}`,
       },
     });
 
