@@ -26,7 +26,7 @@ const storeToJSON = async (data) => {
   // save to json file
 
   //define fs
-  const jsonDirectory = path.join(process.cwd(), 'data');
+  const jsonDirectory = path.join(process.cwd(), 'json');
   
 
   await fs.writeFile(jsonDirectory + '/user.json', JSON.stringify(json), (err) => {
