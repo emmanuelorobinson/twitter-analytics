@@ -1,9 +1,11 @@
 import { Client } from "twitter-api-sdk";
 import needle from "needle";
-import path from 'path';
-import { promises as fs } from 'fs';
+import path from "path";
+import { promises as fs } from "fs";
 
 const client = new Client(process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN);
+
+const jsonDirectory = path.join(process.cwd(), "data");
 
 const storeToJSON = async (data) => {
   let json = {};
@@ -26,9 +28,6 @@ const storeToJSON = async (data) => {
     };
   }
 
-
-  const jsonDirectory = path.join(process.cwd(), 'data');
-  
   // fs.writeFileSync("././data/tweets.json", JSON.stringify(json));
   await fs.writeFileSync(jsonDirectory + "/tweets.json", JSON.stringify(json));
 };
@@ -43,11 +42,11 @@ const metrics = {
   topHashtag: {},
 };
 
-const getTopSource = () => {
-
+const getTopSource = async () => {
   //open json file and get data
-  const fs = require("fs");
-  const data = fs.readFileSync("././data/tweets.json");
+
+  // const data = fs.readFileSync("././data/tweets.json");
+  const data = await fs.readFile(jsonDirectory + "/tweets.json", "utf8");
 
   //parse json
   const json = JSON.parse(data);
@@ -64,8 +63,7 @@ const getTopSource = () => {
 
     if (sources[source] === undefined) {
       sources[source] = 1;
-    }
-    else {
+    } else {
       sources[source]++;
     }
   }
@@ -74,10 +72,10 @@ const getTopSource = () => {
   metrics.topSource = sources;
 };
 
-const getTopHashtag = () => {
+const getTopHashtag = async () => {
   //open json file and get data
-  const fs = require("fs");
-  const data = fs.readFileSync("././data/tweets.json");
+  // const data = fs.readFileSync("././data/tweets.json");
+  const data = await fs.readFile(jsonDirectory + "/tweets.json", "utf8");
 
   //parse json
   const json = JSON.parse(data);
@@ -89,47 +87,42 @@ const getTopHashtag = () => {
 
     //get hashtags and increment count
     let hashtag = tweetMetrics.hashtag || [];
-    
+
     // ignore hashtags that are empty
     if (hashtags.length === 0) {
       continue;
-    }
-    else {
-    hashtag.forEach((tag) => {
+    } else {
+      hashtag.forEach((tag) => {
+        console.log(tag.tag);
 
-      console.log(tag.tag);
-
-      if (hashtags[tag.tag] === undefined) {
-        hashtags[tag.tag] = 1;
-      }
-      else {
-        hashtags[tag.tag]++;
-      }
+        if (hashtags[tag.tag] === undefined) {
+          hashtags[tag.tag] = 1;
+        } else {
+          hashtags[tag.tag]++;
+        }
+      });
     }
-    );
-  }
 
     metrics.topHashtag = hashtags;
   }
+};
+const getUserInfo = async () => {
+  // const data = fs.readFileSync("././data/user.json");
+  const data = await fs.readFile(jsonDirectory + "/user.json", "utf8");
 
-}
-const getUserInfo = () => {
-
-  const fs = require("fs");
-  const data = fs.readFileSync("././data/user.json");
   const json = JSON.parse(data);
 
-  // get user data  
+  // get user data
   metrics.username = json[Object.keys(json)[0]].username;
   metrics.followers_count = json[Object.keys(json)[0]].followers_count;
   metrics.following_count = json[Object.keys(json)[0]].following_count;
   metrics.tweet_count = json[Object.keys(json)[0]].tweet_count;
-}
+};
 
-const getTopTweet = () => {
+const getTopTweet = async () => {
   const fs = require("fs");
 
-  const data = fs.readFileSync("././data/tweets.json");
+  const data = await fs.readFile(jsonDirectory + "/tweets.json", "utf8");
 
   //parse json
   const json = JSON.parse(data);
@@ -158,7 +151,6 @@ const getTopTweet = () => {
 };
 
 export default async function handler(req, res) {
-
   try {
     const { username } = req.query;
 
@@ -186,15 +178,15 @@ export default async function handler(req, res) {
     getUserInfo();
 
     // console.log(metrics);
-    
 
-    const fs = require("fs");
-
-    fs.writeFileSync("././data/tweetdata.json", JSON.stringify(metrics));
+    // fs.writeFileSync("././data/tweetdata.json", JSON.stringify(metrics));
+    await fs.writeFileSync(
+      jsonDirectory + "/tweetdata.json",
+      JSON.stringify(metrics)
+    );
 
     // return json;
     res.status(200).json(metrics);
-
   } catch (error) {
     console.log(error);
   }
