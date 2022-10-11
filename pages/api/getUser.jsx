@@ -1,10 +1,11 @@
 import { Client } from "twitter-api-sdk";
 import needle from "needle";
 import path from 'path';
+import { promises as fs } from 'fs';
 
 const client = new Client(process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN);
 
-const storeToJSON = (data) => {
+const storeToJSON = async (data) => {
   let json = {};
 
   console.log(data);
@@ -28,9 +29,14 @@ const storeToJSON = (data) => {
   const jsonDirectory = path.join(process.cwd(), 'data');
   
 
-  const fs = require('fs');
-  // navigate to the directory where the file is located
-  fs.writeFileSync(jsonDirectory + '/user.json', JSON.stringify(json));
+  await fs.writeFile(jsonDirectory + '/user.json', JSON.stringify(json), (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('file saved');
+    }
+  });
+
   //print current directory
 
   // return json;
