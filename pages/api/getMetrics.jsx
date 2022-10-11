@@ -1,9 +1,11 @@
 import { Client } from "twitter-api-sdk";
 import needle from "needle";
+import path from 'path';
+import { promises as fs } from 'fs';
 
 const client = new Client(process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN);
 
-const storeToJSON = (data) => {
+const storeToJSON = async (data) => {
   let json = {};
 
   for (let i = 0; i < data.length; i++) {
@@ -24,8 +26,11 @@ const storeToJSON = (data) => {
     };
   }
 
-  const fs = require("fs");
-  fs.writeFileSync("././data/tweets.json", JSON.stringify(json));
+
+  const jsonDirectory = path.join(process.cwd(), 'data');
+  
+  // fs.writeFileSync("././data/tweets.json", JSON.stringify(json));
+  await fs.writeFileSync(jsonDirectory + "/tweets.json", JSON.stringify(json));
 };
 
 const metrics = {
