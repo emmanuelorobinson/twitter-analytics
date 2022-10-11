@@ -11,14 +11,22 @@ const FindUser = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/getUser?user=${user}`);
 
+      const test = await fetch('/api/hello');
+      const testData = await test.json();
+      console.log(testData);
+
+      console.log("starting fetch");
+      const response = await fetch(`/api/getUser?user=${user}`);
+      
       const data = await response.json();
 
       console.log(data);
       props.id(data.id);
       props.username(data.username);
       setProfileImgUrl(data.profile_image_url);
+
+      console.log("fetch complete");
 
       // const response = await fetch('/api/getCalculations')
     } catch (error) {
