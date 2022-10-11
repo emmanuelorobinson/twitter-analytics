@@ -36,14 +36,7 @@ const storeToJSON = (data) => {
 export default async function handler(req, res) {
   try {
     const { user } = req.query;
-    // const response = await client.users.findUserByUsername(user);
-
-    // const response = await fetch(`https://api.twitter.com/2/users/by/username/${user}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-    //   },
-    // });
-
+  
     const endpointUrl = `https://api.twitter.com/2/users/by/username/${user}`;
 
     const params = {
@@ -56,13 +49,22 @@ export default async function handler(req, res) {
       },
     });
 
+    //do the same thing using fetch include params
+    // const response = await fetch(endpointUrl, params, {
+    //   headers: {
+    //     authorization: `Bearer ${process.env.NEXT_PUBLIC_TWITTER_BEARER_TOKEN}`,
+    //   },
+    // });
+
+
     // console.log(response);
     const data = await response.body;
 
     storeToJSON(data.data);
 
-    res.send(data.data);
+    res.status(200).send(data.data);
   } catch (error) {
     console.log(error);
+    res.status(500).send(error);
   }
 }
